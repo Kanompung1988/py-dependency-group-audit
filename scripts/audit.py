@@ -26,6 +26,8 @@ def audit(data):
         return findings
     names = {}
     for name in groups:
+        if not re.fullmatch(r'[A-Za-z0-9](?:[A-Za-z0-9._-]*[A-Za-z0-9])?', name):
+            add('INVALID_GROUP_NAME', name, 'Group name is not a valid unnormalized dependency-group identifier', 'error')
         norm = normalize(name)
         if norm in names:
             add('NAME_COLLISION', name, 'Normalized name collides with ' + names[norm], 'error')
